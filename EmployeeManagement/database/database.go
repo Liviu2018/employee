@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/Liviu2018/employee/EmployeeManagement/data"
+	// we need mysql driver
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -29,10 +30,11 @@ func Init() error {
 var createTableQuery = "CREATE TABLE IF NOT EXISTS employee.Employee ( " +
 	"id INT PRIMARY KEY, " +
 	"name VARCHAR(255) NOT NULL, " +
-	"manager_id INT)"
+	"manager_id INT);"
 
 // creates a new employee.Employee table, only if the table does not exist
 func createTableIfNotExists() error {
+	fmt.Println("createTableQuery:", createTableQuery)
 	_, err := DB.Exec(createTableQuery)
 
 	return err
@@ -52,9 +54,14 @@ func AddEmployee(e data.Employee) error {
 	// if employee is not the CEO, first check that his manager exists
 	if e.ID != e.ManagerID {
 		manager, err := containsID(e.ManagerID)
-		if err != nil || manager == false {
+		if err != nil || !manager {
 			return fmt.Errorf("Manager %d does not exist", e.ManagerID)
 		}
+	}
+
+	exists, err := containsID(e.ID)
+	if err != nil || exists {
+		return fmt.Errorf("ID %d already exists", e.ManagerID)
 	}
 
 	insert, err := DB.Prepare(insertQuery)

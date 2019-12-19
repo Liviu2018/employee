@@ -12,3 +12,8 @@ type Employee struct {
 func (e *Employee) String() string {
 	return fmt.Sprintf("Employee[name: %s, ID: %d, ManagerID: %d]", e.Name, e.ID, e.ManagerID)
 }
+
+// IsValid checks if the fields of this Employee object meet basic requirements
+func (e *Employee) IsValid() bool {
+	return e.Name != "" && e.ID >= 0 && e.ManagerID >= 0
+}

@@ -2,24 +2,32 @@ package main
 
 import (
 	"fmt"
-	"github.com/Liviu2018/employee/EmployeeManagement/database"
+	"net/http"
+	"os"
+	"os/signal"
 
-	"github.com/Liviu2018/employee/EmployeeManagement/data"
+	"github.com/gorilla/mux"
+
+	resthandlers "github.com/Liviu2018/employee/EmployeeManagement/api"
+	"github.com/Liviu2018/employee/EmployeeManagement/database"
 )
 
 func main() {
 	database.Init()
 	defer database.Close()
 
-	err := database.AddEmployee(data.Employee{Name: "bbb", ID: 2, ManagerID: 1})
-	if err != nil {
-		fmt.Println(err)
-	}
+	r := mux.NewRouter()
 
-	all, err := database.GetAllEmployees()
-	if err != nil {
-		fmt.Println(err)
-	}
+	r.Path("/createEmployee").Methods("POST").HandlerFunc(resthandlers.CreateEmployee)
+	r.Path("/listAllEmployees").Methods("GET").HandlerFunc(resthandlers.ListAllEmployees)
+	http.Handle("/", r)
 
-	fmt.Println(all)
+	go http.ListenAndServe(fmt.Sprintf(":%d", 8080), nil)
+
+	// this way main waits forever, giving a chance to its goroutine to serve incoming API calls; afterwards it can still print a message
+	sig := make(chan os.Signal)
+	signal.Notify(sig, os.Interrupt, os.Kill)
+	<-sig
+
+	fmt.Println("Receive interrupt signal")
 }

@@ -12,7 +12,7 @@ Requirements:
 
 
 
-You need to get the following Go packages, for convenience they already have "go get" as prefix, 
-simply copy paste the below code in your console:
-
-go get github.com/go-sql-driver/mysql
+This application exposes a REST API and an html page. The rest endpoints are:
+    - /createEmployee  <- will add a new employee into the database, if its manager
+    exists and its ID is not already there, and its fields are valid
+    - /listAllEmployees <- will return a formated list of all existing employees
