@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/Liviu2018/employee/EmployeeManagement/data"
+	"github.com/Liviu2018/employee/EmployeeManagement/formatting"
 
 	"github.com/Liviu2018/employee/EmployeeManagement/database"
 )
@@ -44,6 +45,8 @@ func ListAllEmployees(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
+	whiteTabs, names := formatting.FormatHierarchically(result)
+
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(fmt.Sprintf("Found %d employees: %v", len(result), result)))
+	w.Write([]byte(fmt.Sprintf("Found %d employees: %v, %v", len(whiteTabs), whiteTabs, names)))
 }

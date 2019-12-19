@@ -1,7 +1,6 @@
 package formatting
 
 import (
-	"fmt"
 	"github.com/Liviu2018/employee/EmployeeManagement/data"
 )
 
@@ -10,55 +9,12 @@ import (
 // all cells of a row are empty, except one, containing the name of that Employee
 // the first row is the CEO, on its first cell is the CEO name
 // all other rows are the employees indented with tabs to their manager
-func FormatHierarchically(input []data.Employee) [][]string {
+func FormatHierarchically(input []data.Employee) ([]int, []string) {
 	parentIndexes := computeParentIndexes(input)
 
-	heights := computeHeights(parentIndexes)
-	groupedHeights := groupHeights(heights)
+	tree := buildTree(input, parentIndexes)
 
-	tree := buildTree(input, groupedHeights)
-
-	fmt.Println(tree)
-
-	return nil
-}
-
-// groupHeights receives a list of heights, and groups them in a map
-// in the resulting map, each key is a key value (from 0 to max height)
-// and the value of each key is a slice with the indexes inside height that contain that value
-func groupHeights(heights []int) map[int][]int {
-	result := make(map[int][]int)
-
-	for i := 0; i < len(heights); i++ {
-		if _, ok := result[heights[i]]; !ok {
-			result[heights[i]] = make([]int, 0)
-		}
-
-		result[heights[i]] = append(result[heights[i]], i)
-	}
-
-	return result
-}
-
-func computeHeights(parents []int) []int {
-	heigths := make([]int, len(parents))
-
-	for i := 0; i < len(parents); i++ {
-		startIndex := i
-
-		// as long as we have not reached the CEO
-		// and the height of the currentIndex has not already been computed
-		for startIndex != parents[startIndex] && heigths[parents[startIndex]] == 0 {
-			startIndex = parents[startIndex]
-
-			heigths[i]++
-		}
-
-		// we have reached a parent with previous calculated heigth, add that
-		heigths[i] += heigths[startIndex]
-	}
-
-	return heigths
+	return computeFormat(tree, len(input))
 }
 
 // computeParentIndexes takes a slise of data.Employee as input
