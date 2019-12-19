@@ -31,8 +31,7 @@ and so on. After building* this tree we iterate on it and compose the final resu
 
 *To build the tree efficiently, we use an auxiliary data structure, namely the parent array. This array
 tells us who is the parent of element at index i. parent[i] = parent of employee at index i in out input slice. For any index i, repeatedly calling parent[i], parent[parent[i]], parent[parent[parent[i]]] will
-eventually reach the root node (the CEO). If for each employee we thus know the path from him up unit the CEO,
-it is easy to add that employee in a tree.
+eventually reach the root node (the CEO). If for each employee we thus know the path from him up until the CEO, it is easy to add that employee in a tree.
 
 *To compute the final result we traverse the tree, starting with its lowest rigth node. The height of the
 node will be equal to how many empty tabs will be in front of that employee name, and the distance to
