@@ -1,25 +1,29 @@
-This application manages the employees of a company. It can store, list, print and delete employees.
+This application manages the employees of a company. It can store, list, print and delete employees. 
+Its main purpose is to display the employees in their desired format. 
+To achieve this table/column display format, for each employee we must compute: 
+    - what row (from top to bottom) will contain the name of that employee; CEO is on first row
+    - how many empty cells/tabs are in front of this employees name cell (how many managers it has) 
 
-Requirements:
+
+Requirements to run:
 - Golang (tested with go1.13.4 darwin/amd64)
 - MySQL Community Server installed (tested on "macOS 10.14 (x86, 64-bit), DMG Archive" from https://dev.mysql.com/downloads/file/?id=490317)
     - install guide for MacBook is here: http://www.ccs.neu.edu/home/kathleen/classes/cs3200/MySQLMAC.pdf
-- mysql is running, and it has a database employee, with user: employee and password: employeePassword1234
-    - create user 'employee'@'localhost' identified by 'employeePassword1234';
-    - create database employee;
-    - grant all on employee.* to 'employee'@'localhost';
-    - flush privileges;
+    - mysql is running, and it has a database employee, with user: employee and password: employeePassword1234
+        - create user 'employee'@'localhost' identified by 'employeePassword1234';
+        - create database employee;
+        - grant all on employee.* to 'employee'@'localhost';
+        - flush privileges;
 
-How to run
-Compile main/main.go and run it. Then open your browser and go to localhost:8080/static/index.html
+How to run:
+    - compile main/main.go and run it 
+    - open your browser and go to localhost:8080/static/index.html
 
 TODO:
-    - finish the algorithm
-    - read configs from config file
     - add bigger readme
-    - add nice UI page (html)
     - add unit tests
     - add delete employee operation
+    - initial load
 no security
 no update/delete
 problem description
@@ -56,3 +60,9 @@ This is solely for flavor, the algorithm to arrange the data could, with minimal
 NOTE 2: I went for a complexity of O(NlogN). With a modified version of the union find/disjoint set algorithm,
 I believe an even better complexity could have been achieved (https://www.geeksforgeeks.org/disjoint-set-data-structures/).
 
+NOTE3: I assumed the classical company tree organization. Namely I cannot be my own manager.
+Nor can I be the manager of a person who is itself the manager of my manager, and so on. 
+If represented as a graph, this organizational chart has no cycles. 
+
+NOTE4: Things like security, logging, update operation for a given employee, naming conventions, convenience methods (like bulk employee insertion),
+thread safety, uniform error handling, realistic testing, etc - are not going to influence the formatting algorithm, that is why I have left them out (not really needed). Some things I did add, like an UI page, and log messages for handlers, etc.

@@ -13,16 +13,11 @@ import (
 var DB *sql.DB
 
 // Init initializes the mySql database connection
-func Init() error {
-	/*
-		serverName := "localhost:3306"
-		user := "myuser"
-		password := "pw"
-		dbName := "demo"
-	*/
-
+func Init(datasource string) error {
 	var err error
-	DB, err = sql.Open("mysql", "employee:employeePassword1234@tcp(127.0.0.1:3306)/employee")
+	DB, err = sql.Open("mysql", datasource)
+
+	createTableIfNotExists()
 
 	return err
 }
@@ -32,10 +27,35 @@ var createTableQuery = "CREATE TABLE IF NOT EXISTS employee.Employee ( " +
 	"name VARCHAR(255) NOT NULL, " +
 	"manager_id INT);"
 
+// this query will only insert if the table is empty
+var initialEmployeesQuery = "INSERT INTO employee.Employee (name, id, manager_id) VALUES " +
+	"('Jamie', 150, 150)," +
+	"('Alan', 100, 150)," +
+	"('Steve', 400, 150)," +
+	"('Martin', 220, 100)," +
+	"('Alex', 275, 100)," +
+	"('David', 190, 400); "
+
+var isEmptyTableQuery = "SELECT EXISTS (SELECT 1 FROM employee.Employee);"
+
 // creates a new employee.Employee table, only if the table does not exist
 func createTableIfNotExists() error {
 	_, err := DB.Exec(createTableQuery)
+	if err != nil {
+		return err
+	}
 
+	containsElements := false
+	err = DB.QueryRow(isEmptyTableQuery).Scan(&containsElements)
+	if err != nil && err != sql.ErrNoRows {
+		return err
+	}
+
+	if containsElements {
+		return nil
+	}
+
+	_, err = DB.Exec(initialEmployeesQuery)
 	return err
 }
 
@@ -43,11 +63,6 @@ var insertQuery = "INSERT INTO employee.Employee (name, id, manager_id) VALUES (
 
 // AddEmployee adds a new employee to the employee.Employee table
 func AddEmployee(e data.Employee) error {
-	err := createTableIfNotExists()
-	if err != nil {
-		return err
-	}
-
 	// if employee is not the CEO, first check that his manager exists
 	if e.ID != e.ManagerID {
 		manager, err := containsID(e.ManagerID)

@@ -9,11 +9,17 @@ import (
 	"github.com/gorilla/mux"
 
 	resthandlers "github.com/Liviu2018/employee/EmployeeManagement/api"
+	configsreader "github.com/Liviu2018/employee/EmployeeManagement/configs"
 	"github.com/Liviu2018/employee/EmployeeManagement/database"
 )
 
 func main() {
-	database.Init()
+	userConfig, err := configsreader.ReadConfigs()
+	if err != nil {
+		panic(err.Error())
+	}
+
+	database.Init(userConfig.DataSource)
 	defer database.Close()
 
 	r := mux.NewRouter().StrictSlash(true)
@@ -26,7 +32,7 @@ func main() {
 
 	http.Handle("/", r)
 
-	go http.ListenAndServe(fmt.Sprintf(":%d", 8080), nil)
+	go http.ListenAndServe(fmt.Sprintf(":%d", userConfig.Port), nil)
 
 	// this way main waits forever, giving a chance to its goroutine to serve incoming API calls; afterwards it can still print a message
 	sig := make(chan os.Signal)

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/Liviu2018/employee/EmployeeManagement/data"
 	"github.com/Liviu2018/employee/EmployeeManagement/formatting"
@@ -13,7 +14,7 @@ import (
 
 // CreateEmployee will add a new employee into the database
 func CreateEmployee(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("resthandlers CreateEmployee")
+	fmt.Println("CreateEmployee", time.Now())
 
 	var newEmployee data.Employee
 
@@ -42,7 +43,7 @@ func CreateEmployee(w http.ResponseWriter, r *http.Request) {
 
 // GetEmployees will return a list of all existing employees
 func GetEmployees(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("resthandlers GetEmployees")
+	fmt.Println("GetEmployees", time.Now())
 
 	result, err := database.GetAllEmployees()
 	if err != nil {
@@ -59,7 +60,7 @@ func GetEmployees(w http.ResponseWriter, r *http.Request) {
 
 // ListAllFormattedEmployees will return a formatted list of all existing employees
 func ListAllFormattedEmployees(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("resthandlers ListAllFormattedEmployees")
+	fmt.Println("ListAllFormattedEmployees", time.Now())
 
 	result, err := database.GetAllEmployees()
 	if err != nil {
