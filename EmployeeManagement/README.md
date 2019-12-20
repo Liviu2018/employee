@@ -31,7 +31,11 @@ We arrange the data in a tree, where the CEO is the root, its immediate manages 
 and so on. After building this tree we iterate on it and compose the final result.
 
 To build the tree efficiently, we use an auxiliary data structure, namely the parent array. This array
-tells us who is the parent of element at index i. parent[i] = parent of employee at index i in out input slice. For any index i, repeatedly calling parent[i], parent[parent[i]], parent[parent[parent[i]]] will eventually reach the root node (the CEO). If for each employee we thus know the path from him up until the CEO, it is easy to add that employee in a tree.
+tells us who is the parent of element at index i. parent[i] = parent of employee at index i in out input slice. 
+For any index i, repeatedly calling parent[i], parent[parent[i]], parent[parent[parent[i]]], and so on
+will eventually reach the root node (the CEO). 
+
+If for each employee we thus know the path from him up until the CEO, it is easy to add that employee in a tree.
 
 To compute the final result we traverse the tree, starting with its lowest rigth node. The height of the
 node will be equal to how many empty tabs will be in front of that employee name, and the distance to
@@ -53,11 +57,10 @@ NOTE3: I assumed the classical company tree organization. Namely I cannot be my 
 Nor can I be the manager of a person who is itself the manager of my manager, and so on. 
 If represented as a graph, this organizational chart has no cycles. 
 
-NOTE4: Things like security, logging, update operation for a given employee, naming conventions, convenience methods (like bulk employee insertion),
-thread safety, uniform error handling, realistic testing, etc - are not going to influence the formatting algorithm, that is why I have left them out (not really needed). Some things I did add, like an UI page, and log messages for handlers, etc.
+NOTE4: Things like security, logging, update/delete operation for a given employee, naming conventions, convenience methods (like bulk employee insertion),
+thread safety, uniform error handling, unit testing, etc - are not going to influence the formatting algorithm, that is why I have left them out (not really needed). Some things I did add, like an UI page, and log messages for handlers, etc.
 
 NOTE5: A big optimization could further be done: when computing for each employee the path of managers, from him up to the CEO -
 we allocate an auxiliary slice where for each employee we store a pointer (to its node in the tree) or nil,
 when we compute the manager of current employee, than the manager of the manager and so on, we stop at the first manager
 who has a non nil entry in this auxiliarry array. As we have just found a pointer to its node, there is no need to go up untill the CEO.
-

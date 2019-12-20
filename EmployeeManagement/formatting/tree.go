@@ -2,6 +2,9 @@ package formatting
 
 import "github.com/Liviu2018/employee/EmployeeManagement/data"
 
+// buildTree build a tree, each node corresponds to one employee
+// tree size = number of employees; root node = CEO
+// for each node, its parent node corresponds to its manager
 func buildTree(input []data.Employee, parentIndexes []int) *Node {
 	var result *Node
 
@@ -23,6 +26,10 @@ func buildTree(input []data.Employee, parentIndexes []int) *Node {
 	return result
 }
 
+// addNodesInPath takes a slice of managers (a chain of command: employee, his manager, his
+// manager's maanger, ...., the CEO) and iterates through it backwards, from CEO to the initial employee
+// it adds nodes in our tree, one node for every new employee it encounter; it has the advantage that
+// it always knows the parent (currentNode) of any new to be inserted node
 func addNodesInPath(root *Node, path []int, input []data.Employee) {
 	currentNode := root
 	currentIndex := len(path) - 1

@@ -50,6 +50,7 @@ func (n *Node) Insert(e data.Employee) *Node {
 	return &newNode
 }
 
+// findChildWithValue returns a pointer to the child of this node, that has a given value - or nil
 func (n *Node) findChildWithValue(e data.Employee) *Node {
 	if n == nil || n.Children == nil || len(n.Children) == 0 {
 		return nil

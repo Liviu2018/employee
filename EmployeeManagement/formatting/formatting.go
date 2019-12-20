@@ -9,6 +9,7 @@ import (
 // all cells of a row are empty, except one, containing the name of that Employee
 // the first row is the CEO, on its first cell is the CEO name
 // all other rows are the employees indented with tabs to their manager
+// a row is represented by its employee name, and how many empty cells are before that name
 func FormatHierarchically(input []data.Employee) ([]int, []string) {
 	parentIndexes := computeParentIndexes(input)
 

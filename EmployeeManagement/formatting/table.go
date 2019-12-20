@@ -42,6 +42,7 @@ func ConvertToSimpleTable(input []data.Employee) [][]string {
 	return result
 }
 
+// getMax returns the max of an int slice
 func getMax(input []int) int {
 	result := input[0]
 
