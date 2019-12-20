@@ -34,7 +34,6 @@ var createTableQuery = "CREATE TABLE IF NOT EXISTS employee.Employee ( " +
 
 // creates a new employee.Employee table, only if the table does not exist
 func createTableIfNotExists() error {
-	fmt.Println("createTableQuery:", createTableQuery)
 	_, err := DB.Exec(createTableQuery)
 
 	return err
@@ -44,8 +43,6 @@ var insertQuery = "INSERT INTO employee.Employee (name, id, manager_id) VALUES (
 
 // AddEmployee adds a new employee to the employee.Employee table
 func AddEmployee(e data.Employee) error {
-	fmt.Println("Iserting:", e)
-
 	err := createTableIfNotExists()
 	if err != nil {
 		return err

@@ -19,7 +19,9 @@ func main() {
 	r := mux.NewRouter().StrictSlash(true)
 
 	r.Path("/createEmployee").Methods("POST").HandlerFunc(resthandlers.CreateEmployee)
-	r.Path("/listAllEmployees").Methods("GET").HandlerFunc(resthandlers.ListAllEmployees)
+	r.Path("/listAllFormattedEmployees").Methods("GET").HandlerFunc(resthandlers.ListAllFormattedEmployees)
+	r.Path("/employees").Methods("GET").HandlerFunc(resthandlers.GetEmployees)
+	r.Path("/favicon.ico").Methods("GET").HandlerFunc(resthandlers.FaviconHandler)
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("../static"))))
 
 	http.Handle("/", r)

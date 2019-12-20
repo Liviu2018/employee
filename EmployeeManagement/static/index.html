@@ -1,10 +1,34 @@
-<body>
+<html>
     <head>
         <title>Employee page</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+
+        <script src="scripts.js"></script>  
     </head>
 
-    <body>
-        <h2>Employee list:</h2>
+    <body onload="loadEmployeeTable(); loadFormattedEmployeeTable()">
+        <h2 class="black-text">Employee list</h2>
+
+        <table id="employee_table">
+                <th>Name</th>
+                <th>ID</th>
+                <th>ManagerID</th>
+        </table>
+
+        <hr>
+        <form action="/createEmployee">
+            <input type="text" name="name" placeholder="name" id="new_employee_name">
+            <input type="number" name="id" placeholder="id" id="new_employee_id">
+            <input type="number" name="manager_id" placeholder="manager id" id="new_employee_manager_id">
+            <input type="button" value="Create employee" onclick="createEmployee()">
+            <input type="button" value="Refresh tables" onclick="refreshTables()">
+        </form>
+        <hr>
+
+        <h2 class="black-text">Formatted employee list</h2>
+        <table id="formatted_employee_table">
+            <tbody></tbody>
+        </table>
 
     </body>
-</body>
+</html>

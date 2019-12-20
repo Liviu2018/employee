@@ -1,0 +1,52 @@
+#formatted_employee_table {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 80%;
+}
+  
+#formatted_employee_table td, #formatted_employee_table th {
+    border: 1px solid #ddd;
+    padding: 2px;
+}
+  
+#formatted_employee_table tr:nth-child(even){background-color: #f2f2f2;}
+  
+#formatted_employee_table tr:hover {background-color: #ddd;}
+  
+#formatted_employee_table th {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
+#employee_table {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 50%;
+}
+
+#employee_table td, #employee_table th {
+    border: 2px solid #ddddee;
+    padding: 3px;
+}
+
+
+#employee_table tr:nth-child(even){background-color: #c9e4ce;}
+  
+#employee_table tr:hover {background-color: rgb(241, 229, 94);}
+  
+#employee_table th {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
+h2.black-text {
+    color: #4CAF50;
+    font-style: normal;
+    margin-left: 5px;
+}

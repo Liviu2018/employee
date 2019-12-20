@@ -20,6 +20,12 @@ TODO:
     - add nice UI page (html)
     - add unit tests
     - add delete employee operation
+no security
+no update/delete
+problem description
+memory usage
+not designed for usability
+names for rest api were chosen in a hurry
 
 This application exposes a REST API and an html page. The rest endpoints are:
     - /createEmployee  <- will add a new employee into the database, if its manager
@@ -49,3 +55,4 @@ This is solely for flavor, the algorithm to arrange the data could, with minimal
 
 NOTE 2: I went for a complexity of O(NlogN). With a modified version of the union find/disjoint set algorithm,
 I believe an even better complexity could have been achieved (https://www.geeksforgeeks.org/disjoint-set-data-structures/).
+

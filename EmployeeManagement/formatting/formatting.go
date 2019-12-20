@@ -1,7 +1,6 @@
 package formatting
 
 import (
-	"fmt"
 	"github.com/Liviu2018/employee/EmployeeManagement/data"
 )
 
@@ -11,14 +10,9 @@ import (
 // the first row is the CEO, on its first cell is the CEO name
 // all other rows are the employees indented with tabs to their manager
 func FormatHierarchically(input []data.Employee) ([]int, []string) {
-	fmt.Println("input", input)
-
 	parentIndexes := computeParentIndexes(input)
-	fmt.Println("parentIndexes", parentIndexes)
 
 	tree := buildTree(input, parentIndexes)
-	fmt.Println("Prinitng tree:")
-	printTreeRecursive(tree, 0)
 
 	return computeFormat(tree, len(input))
 }
@@ -28,7 +22,6 @@ func FormatHierarchically(input []data.Employee) ([]int, []string) {
 // input[result[i]] = the direct manager of input[i]
 func computeParentIndexes(input []data.Employee) []int {
 	idToIndex := mapIDToIndex(input)
-	fmt.Println("idToIndex", idToIndex)
 
 	parents := make([]int, len(input))
 

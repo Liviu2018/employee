@@ -2,14 +2,11 @@ package formatting
 
 import "github.com/Liviu2018/employee/EmployeeManagement/data"
 
-import "fmt"
-
 func buildTree(input []data.Employee, parentIndexes []int) *Node {
 	var result *Node
 
 	for i := 0; i < len(input); i++ {
 		path := computePathToRoot(parentIndexes, i)
-		fmt.Println(input[i].String(), "has path", path)
 
 		if result == nil {
 			// root node will be the last node in this path

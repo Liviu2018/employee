@@ -29,7 +29,7 @@ func (n *Node) SortChildren() {
 	}
 
 	sort.SliceStable(n.Children, func(i, j int) bool {
-		return strings.Compare(n.Children[i].Name, n.Children[j].Name) > 0
+		return strings.Compare(n.Children[i].Name, n.Children[j].Name) < 0
 	})
 }
 
