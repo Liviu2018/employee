@@ -16,10 +16,12 @@ func main() {
 	database.Init()
 	defer database.Close()
 
-	r := mux.NewRouter()
+	r := mux.NewRouter().StrictSlash(true)
 
 	r.Path("/createEmployee").Methods("POST").HandlerFunc(resthandlers.CreateEmployee)
 	r.Path("/listAllEmployees").Methods("GET").HandlerFunc(resthandlers.ListAllEmployees)
+	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("../static"))))
+
 	http.Handle("/", r)
 
 	go http.ListenAndServe(fmt.Sprintf(":%d", 8080), nil)

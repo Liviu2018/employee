@@ -43,7 +43,8 @@ func (n *Node) Insert(e data.Employee) *Node {
 		return child
 	}
 
-	newNode := Node{Name: e.Name, ID: e.ID, Parent: n}
+	// we initialize new nodes to an empty slice, not nil
+	newNode := Node{Name: e.Name, ID: e.ID, Parent: n, Children: []*Node{}}
 	n.Children = append(n.Children, &newNode)
 
 	return &newNode

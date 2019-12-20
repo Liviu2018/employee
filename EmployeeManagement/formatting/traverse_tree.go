@@ -1,5 +1,7 @@
 package formatting
 
+import "fmt"
+
 func computeFormat(root *Node, sizeOfTree int) ([]int, []string) {
 	whiteTabsCount := make([]int, sizeOfTree)
 	displayedNames := make([]string, sizeOfTree)
@@ -42,4 +44,17 @@ type Format struct {
 	whiteTabsCount []int
 	displayedNames []string
 	index          int
+}
+
+func printTreeRecursive(n *Node, height int) {
+	s := ""
+	for i := 0; i < height; i++ {
+		s += "_"
+	}
+
+	fmt.Println(s + n.String())
+
+	for i := 0; i < len(n.Children); i++ {
+		printTreeRecursive(n.Children[i], 1+height)
+	}
 }

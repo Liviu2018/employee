@@ -10,6 +10,8 @@ Requirements:
     - grant all on employee.* to 'employee'@'localhost';
     - flush privileges;
 
+How to run
+Compile main/main.go and run it. Then open your browser and go to localhost:8080/static/index.html
 
 TODO:
     - finish the algorithm

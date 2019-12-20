@@ -2,16 +2,22 @@ package formatting
 
 import "github.com/Liviu2018/employee/EmployeeManagement/data"
 
+import "fmt"
+
 func buildTree(input []data.Employee, parentIndexes []int) *Node {
 	var result *Node
 
 	for i := 0; i < len(input); i++ {
 		path := computePathToRoot(parentIndexes, i)
+		fmt.Println(input[i].String(), "has path", path)
 
 		if result == nil {
+			// root node will be the last node in this path
 			rootNodeIndex := path[len(path)-1]
+			rootNode := input[path[rootNodeIndex]]
 
-			result = &Node{Name: input[rootNodeIndex].Name}
+			// we initialize children to an empty slice, not nil
+			result = &Node{Name: rootNode.Name, ID: rootNode.ID, Children: []*Node{}}
 		}
 
 		addNodesInPath(result, path, input)
@@ -22,7 +28,8 @@ func buildTree(input []data.Employee, parentIndexes []int) *Node {
 
 func addNodesInPath(root *Node, path []int, input []data.Employee) {
 	currentNode := root
-	currentIndex := path[len(path)-1]
+	currentIndex := len(path) - 1
+	currentIndex-- // root is already added
 
 	for currentIndex >= 0 {
 		currentNode = currentNode.Insert(input[path[currentIndex]])
@@ -31,23 +38,19 @@ func addNodesInPath(root *Node, path []int, input []data.Employee) {
 	}
 }
 
+// currentIndex produces a slice containing current node index,
+// the index of his parent, then of his parents parent, and so on,
+// ending with the company's CEO
 func computePathToRoot(parents []int, current int) []int {
-	heigths := make([]int, len(parents))
+	// starting point is the current node
+	result := []int{current}
 
-	for i := 0; i < len(parents); i++ {
-		startIndex := i
+	// as long as we have not reached the CEO
+	for current != parents[current] {
+		current = parents[current]
 
-		// as long as we have not reached the CEO
-		// and the height of the currentIndex has not already been computed
-		for startIndex != parents[startIndex] && heigths[parents[startIndex]] == 0 {
-			startIndex = parents[startIndex]
-
-			heigths[i]++
-		}
-
-		// we have reached a parent with previous calculated heigth, add that
-		heigths[i] += heigths[startIndex]
+		result = append(result, current)
 	}
 
-	return heigths
+	return result
 }
